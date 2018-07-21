@@ -36,44 +36,11 @@ class JoinCommand extends Command implements PluginIdentifiableCommand{
 		if(!$this->plugin->isEnabled()){
 			return false;
 		}
-
 		if(!$sender instanceof Player){
 			$sender->sendMessage("Please use the command in-game");
 			return true;
 		}
-		
-		//$this->arenaManager->addNewPlayerToQueue($sender);
-		$this->confirmForm($sender);
+		$this->arenaManager->addNewPlayerToQueue($sender);
 		return true;
 	}
-	
-	public function confirmForm(Player $player) {
-        $form = $this->formapi->createSimpleForm(function (Player $player, array $data) {
-            if (isset($data[0]))
-			{
-                $button = $data[0];
-                switch ($button)
-				{
-					case 0: $this->arenaManager->addNewPlayerToQueue($player);
-					break;
-					case 1:
-						
-					break;
-				}
-				return true;
-            }
-        });
-		$form->setTitle("§l1vs1");
-		$s = "";
-		$s .= "§aGuidelines to be followed§f:§r\n";
-		$s .= "§b-§f Inventory will be wiped before and after the match.§r\n";
-		$s .= "§b-§f Disconnecting means defeat§r\n";
-		$s .= "§b-§f Teleporting results to Temporary Ban§r\n";
-		$s .= "§b-§f Cheating results to Permanent Ban§r\n";
-        $form->setContent($s);
-		
-        $form->addButton("§lConfirm", 1, "https://cdn1.iconfinder.com/data/icons/unigrid-bluetone-military/60/002_022_military_battle_attack_swords-128.png");
-		$form->addButton("§lCancel", 1, "https://cdn1.iconfinder.com/data/icons/materia-arrows-symbols-vol-8/24/018_317_door_exit_logout-128.png");
-        $form->sendToPlayer($player);
-    }
 }
